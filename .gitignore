@@ -1,0 +1,52 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Local IDE / Crash ###
+.vs/
+hs_err_pid*.log
+hs_err_pid*.jfr
+
+### Local notes / drafts ###
+.continue/
+!README.md
+
+### Local sensitive / runtime data ###
+users.json
+src/main/resources/users.json
+.env
+.env.local
+
+### Local planning artifacts ###
+files.txt
+OPERATION_*.md

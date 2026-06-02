@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body
+    style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; color: #1d1d1f; line-height: 1.5; background-color: #ffffff; padding: 0; margin: 0;">
+
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+
+        <p style="font-size: 18px; font-weight: 600; color: #004d40; margin-top: 0; margin-bottom: 12px;"
+            th:text="#{email.greeting}">Доброго дня!</p>
+
+        <p style="margin-top: 0; margin-bottom: 12px;">
+            <span th:text="#{email.gratitude}">Дякуємо Вам за вибір</span> <b style="color: #004d40;"
+                th:text="${productName}">Product</b>!
+        </p>
+        <p style="color: #86868b; font-size: 13px; margin-top: 0; margin-bottom: 24px;"
+            th:text="#{email.instruction.intro.detailed}">
+            Даний лист містить ліцензійну інформацію та інструкції для активації продукту. Будь ласка, збережіть його та
+            не пересилайте третім особам.
+        </p>
+
+        <hr style="border: 0; border-top: 1px solid #e5e5ea; margin: 24px 0;">
+
+        <p style="margin-top: 0; margin-bottom: 12px;">
+            <b>1.</b> <span th:text="#{email.instruction.download}">Завантажте</span> <b
+                th:text="${productName}">Product</b> <span th:text="#{email.instruction.download.link}">за наступним
+                посиланням:</span>
+        </p>
+
+        <div style="margin-bottom: 24px;">
+
+            <div th:if="${props['uk_online_direct_link'] != null}">
+                <a style="display: inline-block; background-color: #004d40; color: #ffffff; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px; margin-right: 8px; margin-bottom: 8px;"
+                    th:href="${props['uk_online_direct_link']}" th:text="#{email.link.ukr}">україномовна версія</a>
+                <span th:if="${#locale.language != 'uk'}">
+                    <a style="display: inline-block; background-color: #ffffff; color: #1d1d1f; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px; border: 1px solid #d2d2d7; margin-right: 8px; margin-bottom: 8px;"
+                        th:href="${props['ru_online_direct_link']}" th:text="#{email.link.rus}">російськомовна
+                        версія</a>
+                </span>
+                <a style="display: inline-block; background-color: #ffffff; color: #1d1d1f; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px; border: 1px solid #d2d2d7; margin-bottom: 8px;"
+                    th:href="${props['en_online_direct_link']}" th:text="#{email.link.eng}">англомовна версія</a>
+            </div>
+
+            <div th:if="${props['google_play_link'] != null}">
+                <a style="display: inline-block; background-color: #004d40; color: #ffffff; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px; margin-right: 8px; margin-bottom: 8px;"
+                    th:href="${props['google_play_link']}" th:text="#{email.instruction.play_market}">Завантажити з Play
+                    Market</a>
+                <a style="display: inline-block; background-color: #ffffff; color: #1d1d1f; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px; border: 1px solid #d2d2d7; margin-bottom: 8px;"
+                    th:href="${props['direct_link']}" th:text="#{email.action.download.apk}">Завантажити .APK файл</a>
+            </div>
+
+            <div th:if="${props['offline_direct_link'] != null and props['uk_online_direct_link'] == null}">
+                <a style="display: inline-block; background-color: #004d40; color: #ffffff; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px;"
+                    th:href="${props['offline_direct_link']}" th:text="#{email.action.download}">Завантажити продукт</a>
+            </div>
+
+            <div
+                th:if="${props['uk_online_direct_link'] == null and props['google_play_link'] == null and props['offline_direct_link'] == null}">
+                <a style="display: inline-block; background-color: #004d40; color: #ffffff; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px;"
+                    th:href="${props['direct_link']}" th:text="#{email.action.download}">Завантажити продукт</a>
+            </div>
+        </div>
+
+        <p style="margin-top: 0; margin-bottom: 16px;">
+            <b style="color: #e30000;">2. </b><span th:text="#{email.instruction.uninstall}">Видаліть усі антивірусні
+                продукти...</span>
+        </p>
+
+        <p style="margin-top: 0; margin-bottom: 16px;">
+            <b>3.</b> <span th:text="#{email.instruction.install}">Встановіть завантажений антивірус...</span>
+        </p>
+
+        <p style="margin-top: 0; margin-bottom: 12px;">
+            <b>4.</b>
+            <span th:if="${props['offline_client_config_tool_link'] != null and keyType == 'OFFLINE'}">
+                <span th:text="#{email.instruction.download.config_tool.intro}">Для активації Офф-лайн ліцензії
+                    завантажте утиліту:</span>
+            </span>
+            <span th:if="${props['offline_client_config_tool_link'] == null or keyType != 'OFFLINE'}"
+                th:text="#{email.instruction.activate}">
+                Використайте наведену нижче Ліцензійну інформацію для активації продукту...
+            </span>
+        </p>
+
+        <div th:if="${props['offline_client_config_tool_link'] != null and keyType == 'OFFLINE'}"
+            style="margin-bottom: 24px;">
+            <a style="display: inline-block; background-color: #ffffff; color: #1d1d1f; padding: 10px 18px; text-decoration: none; font-weight: 500; font-size: 13px; border-radius: 8px; border: 1px solid #d2d2d7;"
+                th:href="${props['offline_client_config_tool_link']}"
+                th:text="#{email.instruction.download.config_tool}">Утиліта налаштування клієнтів</a>
+        </div>
+
+
+        <hr style="border: 0; border-top: 1px solid #e5e5ea; margin: 32px 0 24px 0;">
+
+        <p style="margin-top: 0; margin-bottom: 16px;"><b
+                style="color: #004d40; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px;"
+                th:text="#{email.license.code}">Ліцензійний код</b></p>
+
+        <div th:if="${hasAttachment}"
+            style="background-color: #f5f5f7; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+            <div
+                style="font-size: 11px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                Файл ліцензії</div>
+            <b style="color: #004d40; font-size: 15px;" th:text="#{email.license.in_attachment}">у додатку до листа</b>
+        </div>
+
+        <div th:if="${!hasAttachment}" th:each="key : ${keys}" style="margin-bottom: 20px;">
+            <div th:title="#{email.license.tooltip}" style="
+                display: inline-block; 
+                background-color: #f5f5f7; 
+                border-radius: 8px; 
+                padding: 16px; 
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; 
+                font-size: 13px; 
+                color: #1d1d1f; 
+                cursor: pointer; 
+                -webkit-user-select: all; 
+                user-select: all;">
+
+                <span
+                    style="display: block; font-family: -apple-system, sans-serif; font-size: 11px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; user-select: none;"
+                    th:text="#{email.license.hint}">
+                    Клікніть на поле, щоб виділити весь ключ
+                </span><br />
+
+                <th:block th:utext="${#strings.replace(key, '&#10;', '<br/>')}"></th:block>
+            </div>
+        </div>
+
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
+            <tr>
+                <td width="50%" valign="top">
+                    <span
+                        style="display: block; font-size: 11px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;"
+                        th:text="#{email.license.devices}">Кількість ПК:</span>
+                    <b style="font-size: 14px; color: #1d1d1f;" th:text="${pcCount}">1</b>
+                </td>
+                <td width="50%" valign="top">
+                    <span
+                        style="display: block; font-size: 11px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;"
+                        th:text="#{email.license.duration}">Термін дії:</span>
+                    <b style="font-size: 14px; color: #1d1d1f;">
+                        <span th:text="${durationText}">1 year</span>
+                        <span th:if="${false}"
+                            th:text="#{email.license.duration.year}">рік</span>
+                        <span
+                            th:if="${false}"
+                            th:text="#{email.license.duration.years.few}">роки</span>
+                        <span
+                            th:if="${false}"
+                            th:text="#{email.license.duration.years.many}">років</span>
+                    </b>
+                </td>
+            </tr>
+        </table>
+
+        <hr style="border: 0; border-top: 1px solid #e5e5ea; margin: 24px 0;">
+
+        <div th:if="${activationFlow != null}" style="margin-bottom: 24px;">
+            <p style="font-weight: 600; margin-top: 0; margin-bottom: 12px;"
+                th:text="#{email.instruction.activation.steps.intro}">Для активації ліцензії рекомендуємо:</p>
+            <ol style="margin-top: 0; padding-left: 20px; color: #1d1d1f;" th:if="${activationFlow == 'ANDROID'}">
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.android.step1}">Step 1</li>
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.android.step2}">Step 2</li>
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.android.step3}">Step 3</li>
+                <li th:text="#{email.instruction.activation.android.step4}">Step 4</li>
+            </ol>
+            <ol style="margin-top: 0; padding-left: 20px; color: #1d1d1f;"
+                th:if="${activationFlow == 'ZIS3' or activationFlow == 'ZAV3' or activationFlow == 'ZTS3'}">
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.step1}">Step 1</li>
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.step2}">Step 2</li>
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.step3}">Step 3</li>
+                <li th:text="#{email.instruction.activation.step4}">Step 4</li>
+            </ol>
+            <ol style="margin-top: 0; padding-left: 20px; color: #1d1d1f;" th:if="${activationFlow == 'ZIS2'}">
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.zis2.step1}">Step 1</li>
+                <li style="margin-bottom: 6px;" th:text="#{email.instruction.activation.zis2.step2}">Step 2</li>
+                <li th:text="#{email.instruction.activation.zis2.step3}">Step 3</li>
+            </ol>
+        </div>
+
+        <div th:if="${props['uk_instruction_overview_video_link'] != null}" style="margin-bottom: 24px;">
+            <p style="font-weight: 600; margin-top: 0; margin-bottom: 12px;"
+                th:text="#{email.instruction.videos.intro}">Перед встановленням продукту рекомендуємо переглянути
+                відео-інструкції:</p>
+            <ul style="margin-top: 0; padding-left: 20px; color: #1d1d1f;">
+                <li style="margin-bottom: 6px;"><a style="color: #004d40; text-decoration: underline;"
+                        th:href="${props['uk_instruction_overview_video_link']}"
+                        th:text="#{email.instruction.video.overview}">Опис продукту</a></li>
+                <li style="margin-bottom: 6px;"><a style="color: #004d40; text-decoration: underline;"
+                        th:href="${props['uk_instruction_installation_video_link']}"
+                        th:text="#{email.instruction.video.installation}">Інструкція з встановлення</a></li>
+                <li><a style="color: #004d40; text-decoration: underline;"
+                        th:href="${props['uk_instruction_registration_video_link']}"
+                        th:text="#{email.instruction.video.registration}">Реєстрація продукту</a></li>
+            </ul>
+        </div>
+
+        <p style="color: #86868b; font-size: 13px; margin-top: 0; margin-bottom: 32px;"
+            th:text="#{email.instruction.more}">
+            Інші матеріали по продукту доступні на нашому офіційному сайті.
+        </p>
+
+        <div style="background-color: #f5f5f7; border-radius: 8px; padding: 20px;">
+            <p style="font-weight: 600; margin-top: 0; margin-bottom: 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b;"
+                th:text="#{email.support.contacts}">Контакти Служби технічної підтримки:</p>
+            <p style="margin-top: 0; margin-bottom: 16px; font-size: 13px; line-height: 1.8;">
+                <span><span style="color: #86868b;">Онлайн-чат:</span> <a
+                        style="color: #004d40; text-decoration: none; font-weight: 500;"
+                        th:href="#{email.support.chat.url}"
+                        th:text="#{email.support.chat.url}">chat</a><br></span>
+                <span><span style="color: #86868b;">E-Mail:</span> <a
+                        style="color: #004d40; text-decoration: none; font-weight: 500;"
+                        th:href="|mailto:#{email.support.email}|"
+                        th:text="#{email.support.email}">email</a><br></span>
+                <span><span style="color: #86868b;">Телефон:</span> <a
+                        style="color: #1d1d1f; text-decoration: none; font-weight: 500;"
+                        th:href="|tel:#{email.support.phone}|"
+                        th:text="#{email.support.phone}">phone</a></span>
+            </p>
+            <p style="color: #86868b; font-size: 13px; margin-top: 0; margin-bottom: 0;">
+                <span th:text="#{email.signoff}">З найкращими побажаннями</span>,<br>
+                <b style="color: #1d1d1f;" th:text="#{email.support.name}">Zillya! Центр підтримки</b>
+            </p>
+        </div>
+
+    </div>
+</body>
+
+</html>

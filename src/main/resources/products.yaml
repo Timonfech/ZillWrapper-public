@@ -1,0 +1,12 @@
+﻿keyTypes:
+  - name: "ONLINE"
+    pattern: "onl?i?n?e?|Ð¾Ð½Ð»?Ð°?Ð¹?Ð½?"
+  - name: "OFFLINE"
+    pattern: "offl?i?n?e?|Ð¾Ñ„Ð»?Ð°?Ð¹?Ð½?"
+
+licenseCommentPatterns:
+  whiteadmin:
+    keyPattern: "[a-f0-9]{4,64}"
+    offlineSuffixPattern: "\\+\\s*(?:off|Ð¾Ñ„Ñ„)"
+    separatorsPattern: "[,\\n\\r]+"
+
